@@ -1,7 +1,8 @@
 @description('The tags to associate with the resource')
 param tags object
 
-var registryName = 'acr${uniqueString(resourceGroup().id, subscription().subscriptionId)}'
+var uniqueName = uniqueString(resourceGroup().id, subscription().id)
+var registryName = 'acr${uniqueName}'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: registryName
@@ -15,7 +16,7 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
   }
 }
 
-var identityName = 'identity${uniqueString(resourceGroup().id, subscription().id)}'
+var identityName = 'identity-${uniqueName}'
 
 resource userId 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   location: resourceGroup().location
@@ -44,7 +45,7 @@ resource roleAssignmentRG 'Microsoft.Authorization/roleAssignments@2022-04-01' =
 }
 
 resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
-  name: 'inlineCLI'
+  name: 'ImportImageScript'
   location: resourceGroup().location
   dependsOn: [roleAssignmentACR]
   kind: 'AzureCLI'
@@ -56,7 +57,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
   }
   properties: {
     azCliVersion: '2.63.0' //There must a better way to automatically use latest instead of keep on updating the version.
-    scriptContent: 'az acr import --name ${registryName} --source docker.io/pdetender/eshopwebmvc:latest --image pdetender/eshopwebmvc:latest'
+    scriptContent: 'az acr import --name ${registryName} --source ghcr.io/maartenvandiemen/eshoponweb:latest --image maartenvandiemen/eshoponweb:latest'
     retentionInterval: 'PT1H'
   }
 }

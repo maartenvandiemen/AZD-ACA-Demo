@@ -6,7 +6,6 @@ param acrName string
 
 var uniqueName = uniqueString(resourceGroup().id, subscription().id)
 
-
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' existing = {
   name: acrName
 }
@@ -58,7 +57,21 @@ resource app 'Microsoft.App/containerApps@2024-10-02-preview' = {
       containers: [
         {
           name: 'container-${uniqueName}'
-          image: '${registry.properties.loginServer}/pdetender/eshopwebmvc:latest'
+          image: '${registry.properties.loginServer}/maartenvandiemen/eshoponweb:latest'
+          env: [
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: 'Docker'
+            }
+            {
+              name: 'UseOnlyInMemoryDatabase'
+              value: 'true'
+            }
+            {
+              name: 'ASPNETCORE_HTTP_PORTS'
+              value: '80'
+            }
+          ]
           resources: {
               cpu: 1
               memory: '2Gi'
