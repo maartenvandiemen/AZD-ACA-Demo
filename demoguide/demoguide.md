@@ -42,13 +42,13 @@ This scenario deploys the sample **.NET EShopOnWeb Retail** application as a run
 * ImportImageScript - Script for importing the docker image from GitHub into ACR (is deleted after on hour)
 * Identity-%uniqueId% - Managed User Identity under which the script above is executed
 
-<img src="img/ResourceGroup_Overview.png" alt="ACAPP Resource Group" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/ResourceGroup_Overview.png" alt="ACAPP Resource Group" style="width:70%;">
 <br></br>
 
-<img src="img/eshopacr.png" alt="ACAPP Azure Container Registry" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/eshopacr.png" alt="ACAPP Azure Container Registry" style="width:70%;">
 <br></br>
 
-<img src="img/eshopacapp.png" alt="ACAPP Azure Container Revision" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/eshopacapp.png" alt="ACAPP Azure Container Revision" style="width:70%;">
 <br></br>
 
 ### 2. What can I demo from this scenario after deployment
@@ -57,7 +57,7 @@ This scenario deploys the sample **.NET EShopOnWeb Retail** application as a run
 1. Describe the different components, and how they are related to each other. (Container Environment reflects the 'behind-the-scenes Kubernetes cluster, Log Analytics is used for monitoring, Container Registry holds the Docker images, Container App is the actual running application).
 1. Navigate to **%youralias%acappenvironment** and open its details. 
 
-<img src="img/aca_environment.png" alt="Azure Container Apps Environment" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/aca_environment.png" alt="Azure Container Apps Environment" style="width:70%;">
 <br></br>
 
 1. From the **Overview** tab, show the **Public IP address** of the running application.
@@ -65,14 +65,14 @@ This scenario deploys the sample **.NET EShopOnWeb Retail** application as a run
 1. From the **Overview** tab, show the **Container Apps** is showing "1". This is the number of running instances of the application.
 1. Click the **1** reflecting the Container App Instance. This will open the **Container App Instance** details. Open its details.
 
-<img src="img/aca_app_details.png" alt="Azure Container Apps details" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/aca_app_details.png" alt="Azure Container Apps details" style="width:70%;">
 <br></br>
 
 1. Under the **Application** section, notice Revision, Containers and Scale+Replicas.
 1. Select **Revision**; Each revision is a variation of your container app that can have different settings for traffic allocations, autoscaling or Dapr.
 Create a new revision to make changes to your app. Start by selecting any existing revision.
 
-<img src="img/aca_revision.png" alt="Azure Container Apps Revision" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/aca_revision.png" alt="Azure Container Apps Revision" style="width:70%;">
 <br></br>
 
 1. For the pre-deployed revision, you can pull up the **Revision URL**, which shows you the running EShopOnWeb Retail application in the browser. 
@@ -93,7 +93,7 @@ Create a new revision to make changes to your app. Start by selecting any existi
 1. Click on **Scale+Replicas** to see the scaling details. For now, it is set to run 2 replicas of the container app. Click on **Edit and deploy** in the top menu. 
 1. From the **Create and deploy new revision** blade, click **Scale**. 
 
-<img src="img/aca_scale.png" alt="ACAPP Scale Settings" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/aca_scale.png" alt="ACAPP Scale Settings" style="width:70%;">
 <br></br>
 
 1. Update the **Replicas** to **3** and click **Create**.
@@ -101,19 +101,19 @@ Create a new revision to make changes to your app. Start by selecting any existi
 1. 
 1. **Copy** the public IP address and **navigate** to the EShopOnWeb Retail application from your browser.
 
-<img src="img/eshoponwebsite.png" alt="ACAPP Azure Container Instance" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/eshoponwebsite.png" alt="ACAPP Azure Container Instance" style="width:70%;">
 <br></br>
 
 1. Navigate to **Settings / Containers**
 1. From the **Events**, explain the different actions for getting the container up and running. (pull from registry, started container,...)
 1. From the **Properties**, show the ports, as well as the CPU/Memory settings used for this App
 
-<img src="img/aca_edit_container.png" alt="Azure Container App edit container settings" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/aca_edit_container.png" alt="Azure Container App edit container settings" style="width:70%;">
 <br></br> 
 
 1. From the **Container App** blade, navigate to **Ingress**. This is what Azure Container Apps uses to expose the application to the outside world. Walk the learners through some of the settings.
 
-<img src="img/aca_ingress.png" alt="Azure Container App Ingress settings" style="width:70%;">
+<img src="https://raw.githubusercontent.com/maartenvandiemen/AZD-ACA-Demo/refs/heads/main/demoguide/img/aca_ingress.png" alt="Azure Container App Ingress settings" style="width:70%;">
 <br></br>  
 
 1. From the **Container App** blade, navigate to **Monitoring / Log Stream**. This allows you a console log view of the running application. You can choose between **Console** logs or **System** logs. Either will be used for tracing and monitoring typically. 
@@ -124,7 +124,3 @@ Create a new revision to make changes to your app. Start by selecting any existi
 
 **Note:** This is the end of the current demo guide instructions.
 </div>
-
-
-
-
