@@ -1,6 +1,6 @@
 # Azure Container Apps with Aure Developer CLI
 
-This repo contains a demo for Azure Container Apps which can be deployed to Azure using the [Aure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview). 
+This repo contains a demo for Azure Container Apps which can be deployed to Azure using the [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview). 
 
 💪 This template scenario is part of the larger **[Microsoft Trainer Demo Deploy Catalog](https://aka.ms/trainer-demo-deploy)**.
 
