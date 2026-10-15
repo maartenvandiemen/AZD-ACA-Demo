@@ -35,5 +35,9 @@ module aci 'modules/containerApps.bicep' = {
   params: {
     tags: tags
     acrName: acr.outputs.registryName
+    pullIdentityId: acr.outputs.pullIdentityId
   }
 }
+
+@description('Public URL of the deployed app. The FQDN is stable and served over HTTPS by the Container Apps ingress.')
+output APP_URL string = 'https://${aci.outputs.fqdn}'

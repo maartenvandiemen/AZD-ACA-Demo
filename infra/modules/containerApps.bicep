@@ -4,13 +4,16 @@ param tags object
 @description('Name of the ACR to use in the same resource group')
 param acrName string
 
+@description('Resource ID of the user-assigned identity (with AcrPull on the registry) used to pull the image')
+param pullIdentityId string
+
 var uniqueName = uniqueString(resourceGroup().id, subscription().id)
 
-resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2025-11-01' existing = {
   name: acrName
 }
 
-resource environment 'Microsoft.App/managedEnvironments@2024-10-02-preview' = {
+resource environment 'Microsoft.App/managedEnvironments@2026-07-01' = {
   location: resourceGroup().location
   tags: tags
   name: 'env-${uniqueName}'
@@ -25,10 +28,16 @@ resource environment 'Microsoft.App/managedEnvironments@2024-10-02-preview' = {
   }
 }
 
-resource app 'Microsoft.App/containerApps@2024-10-02-preview' = {
+resource app 'Microsoft.App/containerApps@2026-07-01' = {
   location: resourceGroup().location
   tags: tags
   name: 'app-${uniqueName}'
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${pullIdentityId}': {}
+    }
+  }
   properties: {
     managedEnvironmentId: environment.id
     environmentId: environment.id
@@ -39,17 +48,10 @@ resource app 'Microsoft.App/containerApps@2024-10-02-preview' = {
         external: true
         targetPort: 80
       }
-      secrets:[
-        {
-          name: 'secret1'
-          value: registry.listCredentials().passwords[0].value
-        }
-      ]
       registries: [
         {
           server: registry.properties.loginServer
-          username: registry.listCredentials().username
-          passwordSecretRef: 'secret1'
+          identity: pullIdentityId
         }
       ]
     }
@@ -57,7 +59,7 @@ resource app 'Microsoft.App/containerApps@2024-10-02-preview' = {
       containers: [
         {
           name: 'container-${uniqueName}'
-          image: '${registry.properties.loginServer}/maartenvandiemen/eshoponweb:latest'
+          image: '${registry.properties.loginServer}/maartenvandiemen/eshoponwebmvc:latest'
           env: [
             {
               name: 'ASPNETCORE_ENVIRONMENT'
@@ -71,6 +73,11 @@ resource app 'Microsoft.App/containerApps@2024-10-02-preview' = {
               name: 'ASPNETCORE_HTTP_PORTS'
               value: '80'
             }
+            {
+              // No Seq server is deployed; without this the app fails to start ("Unable to add a Seq health check because the 'ServerUrl' setting is missing")
+              name: 'Aspire__Seq__DisableHealthChecks'
+              value: 'true'
+            }
           ]
           resources: {
               cpu: 1
@@ -81,3 +88,6 @@ resource app 'Microsoft.App/containerApps@2024-10-02-preview' = {
     }
   }
 }
+
+@description('Fully qualified domain name of the container app (HTTPS is provided by the Container Apps ingress)')
+output fqdn string = app.properties.configuration.ingress.fqdn
